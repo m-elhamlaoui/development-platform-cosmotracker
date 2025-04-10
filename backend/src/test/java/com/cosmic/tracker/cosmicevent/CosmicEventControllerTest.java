@@ -19,7 +19,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CosmicEventController.class)
-@Import(TestSecurityConfig.class)
 public class CosmicEventControllerTest {
 
     @Autowired

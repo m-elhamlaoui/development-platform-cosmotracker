@@ -1,8 +1,6 @@
 package com.cosmic.tracker.cosmicevent;
 
 import org.springframework.web.bind.annotation.*;
-import com.cosmic.tracker.cosmicevent.CosmicEvent;
-import com.cosmic.tracker.cosmicevent.CosmicEventRepository;
 
 import java.time.LocalDate;
 import java.util.List;

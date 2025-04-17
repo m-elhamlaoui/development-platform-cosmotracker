@@ -1,0 +1,32 @@
+[
+    {
+        "title": "Quadrantids Meteor Shower",
+        "description": "The Quadrantids is an above average meteor shower, producing up to 40 meteors per hour at its peak.",
+        "eventDate": "2025-01-03",
+        "endDate": "2025-01-04",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Bootes",
+        "source": "NASA"
+    },
+    {
+        "title": "Venus at Greatest Eastern Elongation",
+        "description": "Venus reaches greatest eastern elongation of 47.2 degrees from the Sun. Look for it in the western sky after sunset.",
+        "eventDate": "2025-01-10",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Evening Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Wolf Moon",
+        "description": "This full moon was known as the Wolf Moon. Occurs at 22:28 UTC.",
+        "eventDate": "2025-01-13",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    }
+]

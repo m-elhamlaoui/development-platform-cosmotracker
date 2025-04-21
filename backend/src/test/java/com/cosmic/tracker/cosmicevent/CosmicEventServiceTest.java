@@ -3,6 +3,7 @@ package com.cosmic.tracker.cosmicevent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.context.annotation.Import;
 
 import java.time.LocalDate;
 import java.util.Arrays;

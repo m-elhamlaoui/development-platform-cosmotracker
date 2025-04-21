@@ -1,6 +1,5 @@
 package com.cosmic.tracker.cosmicevent;
 
-import com.cosmic.tracker.TestSecurityConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(CosmicEventController.class)
+@Import(TestSecurityConfig.class)
 public class CosmicEventControllerTest {
 
     @Autowired

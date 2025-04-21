@@ -11,6 +11,7 @@ public class AuthRestController {
 
     @Autowired
     private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,6 +28,9 @@ public class AuthRestController {
         }
 
         String token = jwtUtil.generateToken(user.getUsername());
+        System.out.println();
+        System.out.println();
+        System.out.println("Received login request for " + loginRequest.getUsername());
         return ResponseEntity.ok().body("{\"token\": \"" + token + "\"}");
     }
 
@@ -40,6 +44,4 @@ public class AuthRestController {
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully!");
     }
-
-
 }

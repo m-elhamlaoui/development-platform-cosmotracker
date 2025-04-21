@@ -1,7 +1,7 @@
 [
     {
         "title": "Quadrantids Meteor Shower",
-        "description": "The Quadrantids is an above average meteor shower, producing up to 40 meteors per hour at its peak.",
+        "description": "The Quadrantids is an above average shower, with up to 40 meteors per hour at its peak. Produced by dust grains from comet 2003 EH1. Best viewing from a dark location after midnight. Radiates from Bootes.",
         "eventDate": "2025-01-03",
         "endDate": "2025-01-04",
         "type": "Meteor Shower",
@@ -11,7 +11,7 @@
     },
     {
         "title": "Venus at Greatest Eastern Elongation",
-        "description": "Venus reaches greatest eastern elongation of 47.2 degrees from the Sun. Look for it in the western sky after sunset.",
+        "description": "Venus reaches 47.2° from the Sun. Highest point in western sky after sunset.",
         "eventDate": "2025-01-10",
         "endDate": null,
         "type": "Planetary Event",
@@ -21,12 +21,532 @@
     },
     {
         "title": "Full Moon - Wolf Moon",
-        "description": "This full moon was known as the Wolf Moon. Occurs at 22:28 UTC.",
+        "description": "Fully illuminated at 22:28 UTC. Traditionally known as Wolf Moon.",
         "eventDate": "2025-01-13",
         "endDate": null,
         "type": "Full Moon",
         "visibility": "Global",
         "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Mars at Opposition",
+        "description": "Closest approach to Earth, fully illuminated. Visible all night. Best viewing opportunity.",
+        "eventDate": "2025-01-16",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "All Night",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (12:37 UTC). Optimal for observing faint celestial objects.",
+        "eventDate": "2025-01-29",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Snow Moon",
+        "description": "Fully illuminated at 13:55 UTC. Traditionally known as Snow Moon.",
+        "eventDate": "2025-02-12",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (00:46 UTC). Ideal for deep-sky observations.",
+        "eventDate": "2025-02-28",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Mercury at Greatest Eastern Elongation",
+        "description": "18.2° from Sun. Best evening visibility in western sky after sunset.",
+        "eventDate": "2025-03-08",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Evening Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Worm Moon",
+        "description": "Fully illuminated at 06:56 UTC. Marks spring soil softening.",
+        "eventDate": "2025-03-14",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Total Lunar Eclipse",
+        "description": "Moon turns reddish during eclipse. Visible throughout the Americas.",
+        "eventDate": "2025-03-14",
+        "endDate": null,
+        "type": "Total Lunar Eclipse",
+        "visibility": "North/Central/South America",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "March Equinox",
+        "description": "Vernal equinox at 08:58 UTC. Equal day/night globally.",
+        "eventDate": "2025-03-20",
+        "endDate": null,
+        "type": "Equinox",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (11:00 UTC). Optimal observation conditions.",
+        "eventDate": "2025-03-29",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Partial Solar Eclipse",
+        "description": "Visible in Greenland, N. Europe, and N. Russia. 93% coverage in Canada.",
+        "eventDate": "2025-03-29",
+        "endDate": null,
+        "type": "Partial Solar Eclipse",
+        "visibility": "Northern Regions",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Pink Moon",
+        "description": "Fully illuminated at 00:24 UTC. Marks spring flower bloom.",
+        "eventDate": "2025-04-13",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Mercury at Greatest Western Elongation",
+        "description": "27.4° from Sun. Best morning visibility in eastern sky before sunrise.",
+        "eventDate": "2025-04-21",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Morning Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Lyrids Meteor Shower",
+        "description": "20 meteors/hour from comet Thatcher. Radiates from Lyra. Best after midnight.",
+        "eventDate": "2025-04-22",
+        "endDate": "2025-04-23",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Lyra",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (19:32 UTC). Prime galaxy viewing time.",
+        "eventDate": "2025-04-27",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Eta Aquarids Meteor Shower",
+        "description": "Up to 60 meteors/hour (30 in N. Hemisphere) from Halley's Comet. Radiates from Aquarius.",
+        "eventDate": "2025-05-06",
+        "endDate": "2025-05-07",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Aquarius",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Flower Moon",
+        "description": "Fully illuminated at 16:57 UTC. Marks spring flower abundance.",
+        "eventDate": "2025-05-12",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (03:04 UTC). Dark skies for observation.",
+        "eventDate": "2025-05-27",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Venus at Greatest Western Elongation",
+        "description": "45.9° from Sun. Best morning visibility in eastern sky before sunrise.",
+        "eventDate": "2025-05-31",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Morning Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Strawberry Moon",
+        "description": "Fully illuminated at 07:45 UTC. Marks strawberry harvesting season.",
+        "eventDate": "2025-06-11",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "June Solstice",
+        "description": "Summer solstice (Northern Hemisphere) at 02:40 UTC. Longest day of the year.",
+        "eventDate": "2025-06-21",
+        "endDate": null,
+        "type": "Solstice",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (10:33 UTC). Ideal for deep-space observations.",
+        "eventDate": "2025-06-25",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Mercury at Greatest Eastern Elongation",
+        "description": "25.9° from Sun. Best evening visibility in western sky after sunset.",
+        "eventDate": "2025-07-04",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Evening Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Buck Moon",
+        "description": "Fully illuminated at 20:38 UTC. Marks deer antler growth period.",
+        "eventDate": "2025-07-10",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (19:13 UTC). Optimal faint object viewing.",
+        "eventDate": "2025-07-24",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Delta Aquarids Meteor Shower",
+        "description": "20 meteors/hour from comets Marsden/Kracht. Radiates from Aquarius.",
+        "eventDate": "2025-07-28",
+        "endDate": "2025-07-29",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Aquarius",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Sturgeon Moon",
+        "description": "Fully illuminated at 07:56 UTC. Traditional fish harvest marker.",
+        "eventDate": "2025-08-09",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Perseids Meteor Shower",
+        "description": "60 meteors/hour from comet Swift-Tuttle. Radiates from Perseus.",
+        "eventDate": "2025-08-12",
+        "endDate": "2025-08-13",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Perseus",
+        "source": "NASA"
+    },
+    {
+        "title": "Mercury at Greatest Western Elongation",
+        "description": "18.6° from Sun. Best morning visibility in eastern sky before sunrise.",
+        "eventDate": "2025-08-19",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Morning Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (06:08 UTC). Dark skies for observation.",
+        "eventDate": "2025-08-23",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon - Harvest Moon",
+        "description": "Fully illuminated at 18:10 UTC. Closest to September equinox.",
+        "eventDate": "2025-09-07",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Total Lunar Eclipse",
+        "description": "Blood Moon visible across Asia, Australia, and E. Europe/Africa.",
+        "eventDate": "2025-09-07",
+        "endDate": null,
+        "type": "Total Lunar Eclipse",
+        "visibility": "Asia/Australia/Europe/Africa",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (19:55 UTC). Optimal observation conditions.",
+        "eventDate": "2025-09-21",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Partial Solar Eclipse",
+        "description": "76% coverage visible in New Zealand and Antarctica.",
+        "eventDate": "2025-09-21",
+        "endDate": null,
+        "type": "Partial Solar Eclipse",
+        "visibility": "New Zealand/Antarctica",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Saturn at Opposition",
+        "description": "Brightest appearance. Visible all night with rings observable.",
+        "eventDate": "2025-09-21",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "All Night",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Neptune at Opposition",
+        "description": "Closest approach to Earth. Appears as tiny blue dot in telescopes.",
+        "eventDate": "2025-09-23",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "All Night",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "September Equinox",
+        "description": "Autumnal equinox (Northern) at 18:17 UTC. Equal day/night globally.",
+        "eventDate": "2025-09-22",
+        "endDate": null,
+        "type": "Equinox",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon, Supermoon - Hunters Moon",
+        "description": "First supermoon of 2025. Fully illuminated at 03:49 UTC.",
+        "eventDate": "2025-10-07",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Draconids Meteor Shower",
+        "description": "10 meteors/hour from comet 21P Giacobini-Zinner. Early evening viewing.",
+        "eventDate": "2025-10-07",
+        "endDate": null,
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Draco",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (12:26 UTC). Optimal galaxy observation conditions.",
+        "eventDate": "2025-10-21",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Orionids Meteor Shower",
+        "description": "20 meteors/hour from Halley's Comet. Dark skies due to new moon. Radiates from Orion.",
+        "eventDate": "2025-10-21",
+        "endDate": "2025-10-22",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Orion",
+        "source": "NASA"
+    },
+    {
+        "title": "Mercury at Greatest Eastern Elongation",
+        "description": "23.9° from Sun. Best evening visibility in western sky after sunset.",
+        "eventDate": "2025-10-29",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Evening Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Taurids Meteor Shower",
+        "description": "5-10 meteors/hour from asteroid/comet debris. Bright moon interference expected.",
+        "eventDate": "2025-11-04",
+        "endDate": "2025-11-05",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Taurus",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon, Supermoon - Beaver Moon",
+        "description": "Second supermoon of 2025. Fully illuminated at 13:21 UTC.",
+        "eventDate": "2025-11-05",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Leonids Meteor Shower",
+        "description": "15 meteors/hour from comet Tempel-Tuttle. Dark skies for optimal viewing.",
+        "eventDate": "2025-11-17",
+        "endDate": "2025-11-18",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Leo",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (06:49 UTC). Prime deep-sky observation window.",
+        "eventDate": "2025-11-20",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Uranus at Opposition",
+        "description": "Closest approach to Earth. Visible as blue-green dot through telescopes.",
+        "eventDate": "2025-11-21",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "All Night",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Full Moon, Supermoon - Cold Moon",
+        "description": "Third supermoon of 2025. Fully illuminated at 23:15 UTC.",
+        "eventDate": "2025-12-04",
+        "endDate": null,
+        "type": "Full Moon",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Mercury at Greatest Western Elongation",
+        "description": "20.7° from Sun. Best morning visibility in eastern sky before sunrise.",
+        "eventDate": "2025-12-07",
+        "endDate": null,
+        "type": "Planetary Event",
+        "visibility": "Morning Sky",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Geminids Meteor Shower",
+        "description": "120 meteors/hour from asteroid Phaethon. Moon may obscure faint meteors.",
+        "eventDate": "2025-12-13",
+        "endDate": "2025-12-14",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Gemini",
+        "source": "NASA"
+    },
+    {
+        "title": "New Moon",
+        "description": "Moon not visible (01:45 UTC). Best time for faint object observations.",
+        "eventDate": "2025-12-20",
+        "endDate": null,
+        "type": "New Moon",
+        "visibility": "Sky Observation",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "December Solstice",
+        "description": "Winter solstice (Northern) at 15:02 UTC. Shortest day of the year.",
+        "eventDate": "2025-12-21",
+        "endDate": null,
+        "type": "Solstice",
+        "visibility": "Global",
+        "constellations": "",
+        "source": "NASA"
+    },
+    {
+        "title": "Ursids Meteor Shower",
+        "description": "5-10 meteors/hour from comet Tuttle. Dark skies post-moonset.",
+        "eventDate": "2025-12-21",
+        "endDate": "2025-12-22",
+        "type": "Meteor Shower",
+        "visibility": "Global",
+        "constellations": "Ursa Minor",
         "source": "NASA"
     }
 ]

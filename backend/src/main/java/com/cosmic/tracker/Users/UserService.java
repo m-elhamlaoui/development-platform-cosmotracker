@@ -11,10 +11,11 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired private PasswordEncoder passwordEncoder;
 
-    public void save(String username, String rawPassword) {
+    public void save(String username, String rawPassword, String email) {
         MyUser user = new MyUser();
         user.setUsername(username);
         user.setPassword(passwordEncoder.encode(rawPassword));
+        user.setEmail(email);
         userRepository.save(user);
     }
 }

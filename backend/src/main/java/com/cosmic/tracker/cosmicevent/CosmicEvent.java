@@ -23,6 +23,9 @@ public class CosmicEvent {
     private String constellations;
     private String source;
 
+    @Column(length = 1000)
+    private String notes;
+
     public CosmicEvent() {}
 
     public String getTitle() {

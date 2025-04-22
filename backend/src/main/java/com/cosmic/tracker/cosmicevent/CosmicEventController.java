@@ -61,4 +61,9 @@ public class CosmicEventController {
     public List<CosmicEvent> getUpcomingThisMonth() {
         return service.getUpcomingEventsThisMonth();
     }
+
+    @GetMapping("/{id}")
+    public CosmicEvent getEventById(@PathVariable Long id) {
+        return service.getEventById(id);
+    }
 }

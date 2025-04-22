@@ -6,6 +6,8 @@ import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import { useAuth } from '../context/AuthContext';
 
+console.log('RegisterPage is rendering');
+
 const RegisterPage: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -20,13 +22,13 @@ const RegisterPage: React.FC = () => {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
     
-    if (!username) {
+    if (!username.trim()) {
       newErrors.username = 'Username is required';
     } else if (username.length < 3) {
       newErrors.username = 'Username must be at least 3 characters';
     }
     
-    if (!email) {
+    if (!email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(email)) {
       newErrors.email = 'Email is invalid';
@@ -48,19 +50,32 @@ const RegisterPage: React.FC = () => {
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted'); // Add this
     
     if (!validateForm()) {
+      console.log('Form validation failed', errors); // Add this
       return;
     }
+  
+    console.log('Attempting registration with:', { username, email, password }); // Add this
     
     setLoading(true);
+    setErrors({});
     
     try {
-      await register(username, email, password);
-      navigate('/');
+      console.log('Calling register function...'); // Add this
+      const result = await register(username, email, password);
+      console.log('Register result:', result); // Add this
+      
+      if (result.success) {
+        navigate('/');
+      } else {
+        setErrors({ form: result.error || 'Registration failed' });
+      }
     } catch (err) {
+      console.error('Registration error:', err); // This should already exist
       setErrors({
-        form: 'Registration failed. Username or email might already be in use.'
+        form: err instanceof Error ? err.message : 'Registration failed'
       });
     } finally {
       setLoading(false);
@@ -138,6 +153,7 @@ const RegisterPage: React.FC = () => {
                 type="submit" 
                 fullWidth 
                 isLoading={loading}
+                disabled={loading}
               >
                 Create Account
               </Button>

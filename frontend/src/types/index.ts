@@ -1,12 +1,14 @@
 export interface User {
-  id: string;
+  id?: string;
   username: string;
-  email: string;
-  favorites: string[];
+  email?: string;
+  favorites?: string[];
+  token: string;
 }
 
+
 export interface CosmicEvent {
-  id: string;
+  id: number;
   title: string;
   description: string;
   eventDate: string;
@@ -15,7 +17,6 @@ export interface CosmicEvent {
   visibility: string;
   constellations: string;
   source: string;
-  imageUrl?: string;
 }
 
 export interface AuthContextType {

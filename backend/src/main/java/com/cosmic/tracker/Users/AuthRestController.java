@@ -11,6 +11,8 @@ public class AuthRestController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -36,12 +38,20 @@ public class AuthRestController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody MyUser user) {
+        System.out.println("Register request received for: " + user.getUsername());
+
         if (userRepository.findByUsername(user.getUsername()) != null) {
+            System.out.println("Username already exists: " + user.getUsername());
             return ResponseEntity.badRequest().body("Username already exists.");
         }
 
+        System.out.println("Encoding password for new user: " + user.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        System.out.println("Saving user: " + user.getUsername());
         userRepository.save(user);
+
+        System.out.println("User registered successfully: " + user.getUsername());
         return ResponseEntity.ok("User registered successfully!");
     }
 }

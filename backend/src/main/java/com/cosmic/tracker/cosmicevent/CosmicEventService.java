@@ -49,4 +49,8 @@ public class CosmicEventService {
         return repository.findUpcomingEventsThisMonth(month, year, today);
     }
 
+    public CosmicEvent getEventById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
 }

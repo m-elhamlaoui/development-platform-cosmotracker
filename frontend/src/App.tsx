@@ -27,9 +27,9 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 
 function App() {
   return (
-    <AuthProvider>
-      <StarryBackground />
-      <Router>
+    <Router>
+      <AuthProvider> {/* ✅ Wrap everything that uses useAuth */}
+        <StarryBackground />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
@@ -37,8 +37,7 @@ function App() {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/events/:id" element={<EventDetailPage />} />
           <Route path="/monthly" element={<MonthlyEventsPage />} />
-          
-          {/* Protected routes */}
+
           <Route 
             path="/favorites" 
             element={
@@ -55,13 +54,12 @@ function App() {
               </ProtectedRoute>
             } 
           />
-          
-          {/* 404 route */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 }
+
 
 export default App;

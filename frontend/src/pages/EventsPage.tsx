@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/layout/Layout';
-import { MOCK_EVENTS } from '../data/mockEvents';
+import { fetchAllEvents } from '../data/api'; // new import
 import EventsList from '../components/events/EventsList';
 import { Search, Filter } from 'lucide-react';
+import { CosmicEvent } from '../types';
 
 const EventsPage: React.FC = () => {
+  const [events, setEvents] = useState<CosmicEvent[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<string>('all');
-  
-  const uniqueTypes = Array.from(new Set(MOCK_EVENTS.map(event => event.type)));
-  
-  const filteredEvents = MOCK_EVENTS.filter(event => {
-    const matchesSearchTerm = 
-      event.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        const data = await fetchAllEvents();
+        setEvents(data);
+      } catch (error) {
+        console.error('Failed to load events', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, []);
+
+  const uniqueTypes = Array.from(new Set(events.map(event => event.type)));
+
+  const filteredEvents = events.filter(event => {
+    const matchesSearchTerm =
+      event.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       event.description.toLowerCase().includes(searchTerm.toLowerCase());
-    
+
     const matchesFilter = filter === 'all' || event.type === filter;
-    
+
     return matchesSearchTerm && matchesFilter;
   });
-  
+
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -29,7 +47,7 @@ const EventsPage: React.FC = () => {
             Explore all upcoming astronomical events and add them to your favorites.
           </p>
         </div>
-        
+
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="relative flex-grow">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -45,7 +63,7 @@ const EventsPage: React.FC = () => {
                 placeholder:text-slate-500"
             />
           </div>
-          
+
           <div className="relative min-w-48">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Filter className="h-5 w-5 text-slate-500" />
@@ -64,11 +82,15 @@ const EventsPage: React.FC = () => {
             </select>
           </div>
         </div>
-        
-        <EventsList 
-          events={filteredEvents} 
-          emptyMessage="No events found matching your criteria. Try adjusting your search or filters."
-        />
+
+        {loading ? (
+          <p className="text-slate-400">Loading events...</p>
+        ) : (
+          <EventsList
+            events={filteredEvents}
+            emptyMessage="No events found matching your criteria. Try adjusting your search or filters."
+          />
+        )}
       </div>
     </Layout>
   );

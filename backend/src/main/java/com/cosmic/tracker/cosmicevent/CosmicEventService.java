@@ -38,4 +38,15 @@ public class CosmicEventService {
         return repository.findByEventDateAfter(LocalDate.now());
     }
 
+    public List<CosmicEvent> getEventsByMonth(int month) {
+        return repository.findByEventMonth(month);
+    }
+
+    public List<CosmicEvent> getUpcomingEventsThisMonth() {
+        LocalDate today = LocalDate.now();
+        int month = today.getMonthValue();
+        int year = today.getYear();
+        return repository.findUpcomingEventsThisMonth(month, year, today);
+    }
+
 }

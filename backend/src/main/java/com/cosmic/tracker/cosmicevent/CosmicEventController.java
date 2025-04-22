@@ -21,6 +21,7 @@ public class CosmicEventController {
             @RequestParam(required = false) String constellation,
             @RequestParam(required = false) String start,
             @RequestParam(required = false) String end,
+            @RequestParam(required = false) String month,
             @RequestParam(required = false, defaultValue = "false") boolean fromToday
     ) {
         if (type != null) {
@@ -29,6 +30,11 @@ public class CosmicEventController {
 
         if (constellation != null) {
             return service.getEventsByConstellation(constellation);
+        }
+
+        if (month != null) {
+            int monthNumber = getMonthNumber(month);
+            return service.getEventsByMonth(monthNumber);
         }
 
         if (start != null && end != null) {
@@ -42,8 +48,17 @@ public class CosmicEventController {
         return service.getAllEvents();
     }
 
+    private int getMonthNumber(String monthName) {
+        return java.time.Month.valueOf(monthName.toUpperCase()).getValue();
+    }
+
     @PostMapping
     public CosmicEvent create(@RequestBody CosmicEvent event) {
         return service.saveEvent(event);
+    }
+
+    @GetMapping("/upcoming-this-month")
+    public List<CosmicEvent> getUpcomingThisMonth() {
+        return service.getUpcomingEventsThisMonth();
     }
 }

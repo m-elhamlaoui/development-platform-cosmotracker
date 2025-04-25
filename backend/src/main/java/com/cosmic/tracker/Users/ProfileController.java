@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/me")
 public class ProfileController {
 
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping
@@ -33,28 +33,21 @@ public class ProfileController {
         if (user == null) {
             return ResponseEntity.status(404).body("User not found");
         }
-        // ✅ Update username (check if it's changing)
         if (profileDTO.getUsername() != null && !profileDTO.getUsername().equals(user.getUsername())) {
-            // Optional: check if new username already exists
             if (userRepository.findByUsername(profileDTO.getUsername()) != null) {
                 return ResponseEntity.badRequest().body("Username already taken");
             }
             user.setUsername(profileDTO.getUsername());
         }
 
-        // ✅ Update email
         if (profileDTO.getEmail() != null) {
             user.setEmail(profileDTO.getEmail());
         }
 
-        // ✅ Update password (if provided)
         if (profileDTO.getPassword() != null && !profileDTO.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(profileDTO.getPassword()));
         }
-        
-
         userRepository.save(user);
         return ResponseEntity.ok("Profile updated successfully");
     }
-    // TODO: adding the update profile feature later ( LMAO I dont feel like it 3ndna more priorities to work on)
 }

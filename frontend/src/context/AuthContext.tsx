@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import { User, AuthContextType } from '../types';
 import { useNavigate } from 'react-router-dom';
 import { fetchFavorites, addFavorite, removeFavorite } from '../data/api'; // ✅ Import backend functions
+import { updateUserProfile } from '../data/api'; // at the top
 
 const defaultAuthContext: AuthContextType = {
   user: null,
@@ -153,13 +154,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     navigate('/');
   };
 
-  const updateUser = async (userData: Partial<User>) => {
-    if (!user) return;
-    
+
+const updateUser = async (userData: Partial<User>) => {
+  if (!user) return;
+
+  try {
+    await updateUserProfile(userData);
+
     const updatedUser = { ...user, ...userData };
     setUser(updatedUser);
     localStorage.setItem('cosmoUser', JSON.stringify(updatedUser));
-  };
+  } catch (error) {
+    console.error('Update failed:', error);
+    throw error; 
+  }
+};
+
 
   const value = {
     user,

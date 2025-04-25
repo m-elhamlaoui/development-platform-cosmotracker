@@ -11,7 +11,6 @@ public class ProfileDTO {
         this.username = username;
     }
 
-    // TODO: Add setter later bach ndiro update
     public Long getId() {
         return id;
     }

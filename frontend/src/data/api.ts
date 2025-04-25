@@ -58,3 +58,26 @@ export const fetchEventById = async (id: number): Promise<CosmicEvent> => {
 
   return response.json();
 };
+
+export const updateUserProfile = async (data: {
+  username?: string;
+  email?: string;
+  password?: string;
+}) => {
+  const response = await authorizedFetch('http://localhost:8081/api/me', {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.message || 'Failed to update profile');
+  }
+
+  const contentType = response.headers.get('content-type');
+  if (contentType?.includes('application/json')) {
+    return await response.json();
+  }
+
+  return {};
+};

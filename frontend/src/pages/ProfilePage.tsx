@@ -4,9 +4,11 @@ import Layout from '../components/layout/Layout';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage: React.FC = () => {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, logout } = useAuth();
+  const nagivate = useNavigate();
   
   const [username, setUsername] = useState(user?.username || '');
   const [email, setEmail] = useState(user?.email || '');
@@ -20,7 +22,7 @@ const ProfilePage: React.FC = () => {
   
   const handleAccountSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+  
     if (!username || !email) {
       setMessage({
         type: 'error',
@@ -28,15 +30,20 @@ const ProfilePage: React.FC = () => {
       });
       return;
     }
-    
+  
     setLoading(true);
-    
+  
     try {
       await updateUser({ username, email });
       setMessage({
         type: 'success',
-        text: 'Account information updated successfully'
+        text: 'Account updated. Please log in again.'
       });
+  
+      setTimeout(() => {
+        logout();
+        navigate('/login');
+      }, 2000);
     } catch (error) {
       setMessage({
         type: 'error',
@@ -46,6 +53,7 @@ const ProfilePage: React.FC = () => {
       setLoading(false);
     }
   };
+  
   
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,16 +84,13 @@ const ProfilePage: React.FC = () => {
     
     setLoading(true);
     
-    // In a real app, this would validate the current password and update with the new one
     try {
-      // Mock password update success
       setTimeout(() => {
         setMessage({
           type: 'success',
           text: 'Password updated successfully'
         });
         
-        // Reset form
         setCurrentPassword('');
         setNewPassword('');
         setConfirmPassword('');

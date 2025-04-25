@@ -45,17 +45,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
-                .cors(cors -> cors.disable()) // Désactivez CORS si non nécessaire
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/register", "/api/login", "/login").permitAll()
                         .requestMatchers("/api/me").authenticated()
                         .anyRequest().authenticated()
                 )
-
-
-
-
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

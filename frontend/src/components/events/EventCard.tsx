@@ -46,7 +46,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
       <div className="h-full bg-slate-900 rounded-lg overflow-hidden border border-slate-800 transition-all duration-300 hover:border-primary-600 hover:shadow-lg hover:shadow-primary-900/20">
         
         {/* 🌈 Gradient Block in Place of Image */}
-        <div className="relative h-48 bg-gradient-to-br from-primary-800 to-secondary-700">
+        <div className="relative h-5 bg-gradient-to-br from-primary-800 to-secondary-700">
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-slate-900 to-transparent opacity-70" />
 
           <div className="absolute top-2 right-2 flex space-x-2">

@@ -3,6 +3,7 @@ package com.cosmic.tracker.cosmicevent;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
@@ -17,8 +18,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(CosmicEventController.class)
+@WebMvcTest(controllers = CosmicEventController.class)
 @Import(TestSecurityConfig.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class CosmicEventControllerTest {
 
     @Autowired
@@ -56,7 +58,7 @@ public class CosmicEventControllerTest {
 
         // when & then
         mockMvc.perform(get("/api/events")
-                        .param("type", "Meteor Shower"))
+                        .param("type", "Meteor Shower")) // only this param!
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].type").value("Meteor Shower"));
     }
@@ -72,7 +74,7 @@ public class CosmicEventControllerTest {
 
         // when & then
         mockMvc.perform(get("/api/events")
-                        .param("fromToday", "true"))
+                        .param("fromToday", "true")) // only this param!
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Future Event"));
     }

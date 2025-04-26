@@ -1,31 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/layout/Layout';
-import { getMonthlyEvents } from '../data/mockEvents';
+import { fetchEventsByMonth } from '../data/api'; // Updated import
 import { getCurrentMonth, getCurrentYear } from '../utils/dateUtils';
 import EventsList from '../components/events/EventsList';
 import { Calendar } from 'lucide-react';
+import { CosmicEvent } from '../types';
 
 const MonthlyEventsPage: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
   const [currentYear, setCurrentYear] = useState(getCurrentYear());
-  
-  const events = getMonthlyEvents(currentMonth, currentYear);
-  
+  const [events, setEvents] = useState<CosmicEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
   
+  const years = Array.from({ length: 5 }, (_, i) => getCurrentYear() + i - 1);
+
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchEventsByMonth(months[currentMonth].toUpperCase()); 
+        setEvents(data);
+      } catch (error) {
+        console.error('Failed to load monthly events', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadEvents();
+  }, [currentMonth]); // Only reload when month changes
+
   const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentMonth(parseInt(e.target.value));
   };
-  
+
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCurrentYear(parseInt(e.target.value));
   };
-  
-  const years = Array.from({ length: 5 }, (_, i) => getCurrentYear() + i - 1);
-  
+
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -35,7 +52,7 @@ const MonthlyEventsPage: React.FC = () => {
             View all celestial events for a specific month.
           </p>
         </div>
-        
+
         <div className="bg-slate-900 p-6 rounded-lg border border-slate-800 mb-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
             <div className="bg-primary-900/40 p-3 rounded-lg text-primary-400">
@@ -78,15 +95,19 @@ const MonthlyEventsPage: React.FC = () => {
             </div>
           </div>
         </div>
-        
+
         <h2 className="text-2xl font-bold text-white mb-6">
           Events for {months[currentMonth]} {currentYear}
         </h2>
-        
-        <EventsList 
-          events={events} 
-          emptyMessage={`No events found for ${months[currentMonth]} ${currentYear}.`}
-        />
+
+        {loading ? (
+          <p className="text-slate-400">Loading events...</p>
+        ) : (
+          <EventsList 
+            events={events} 
+            emptyMessage={`No events found for ${months[currentMonth]} ${currentYear}.`}
+          />
+        )}
       </div>
     </Layout>
   );

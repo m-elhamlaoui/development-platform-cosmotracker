@@ -1,5 +1,6 @@
 package com.cosmic.tracker.cosmicevent;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -8,7 +9,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/events")
 public class CosmicEventController {
-
+    @Autowired
     private final CosmicEventService service;
 
     public CosmicEventController(CosmicEventService service) {

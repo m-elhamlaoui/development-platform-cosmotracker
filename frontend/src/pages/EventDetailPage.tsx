@@ -140,7 +140,11 @@ const EventDetailPage: React.FC = () => {
 
             <div className="mb-8">
               <h2 className="text-xl font-semibold text-white mb-3">Description</h2>
-              <p className="text-slate-300 leading-relaxed">{event.description}</p>
+              {event.description ? (
+                <p className="text-slate-300 leading-relaxed">{event.description}</p>
+              ) : (
+                <p className="text-slate-500 italic">No description available for this event.</p>
+              )}
             </div>
 
             {event.constellations && (

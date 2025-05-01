@@ -112,7 +112,6 @@ const ProfilePage: React.FC = () => {
         <h1 className="text-3xl font-bold text-white mb-6">Your Profile</h1>
         
         <div className="bg-slate-900 rounded-lg border border-slate-800 overflow-hidden shadow-lg">
-          {/* Tabs */}
           <div className="flex border-b border-slate-800">
             <button
               className={`px-6 py-4 text-sm font-medium flex items-center ${

@@ -21,6 +21,12 @@ public class AuthRestController {
     @Autowired
     private JwtUtil jwtUtil;
 
+
+    @GetMapping("/protected")
+    public ResponseEntity<String> protectedEndpoint() {
+        return ResponseEntity.ok("You are authenticated!");
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MyUser loginRequest) {
         MyUser user = userRepository.findByUsername(loginRequest.getUsername());

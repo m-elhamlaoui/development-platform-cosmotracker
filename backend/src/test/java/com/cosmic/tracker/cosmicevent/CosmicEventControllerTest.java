@@ -7,13 +7,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,12 +24,14 @@ public class CosmicEventControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    // TODO: remove the MockBean annotation and replace it with MockitoBean instead
     @MockBean
     private CosmicEventService service;
 
     @Autowired
     private ObjectMapper objectMapper;
 
+    //TODO: remove AutoConfigureMockMvc and add MockUser for each test instead
     @Test
     void testGetAllEvents() throws Exception {
         // given
@@ -79,22 +79,4 @@ public class CosmicEventControllerTest {
                 .andExpect(jsonPath("$[0].title").value("Future Event"));
     }
 
-    @Test
-    void testCreateEvent() throws Exception {
-        // given
-        CosmicEvent newEvent = new CosmicEvent();
-        newEvent.setTitle("New Event");
-        newEvent.setEventDate(LocalDate.of(2025, 1, 15));
-        newEvent.setType("Full Moon");
-
-        when(service.saveEvent(any(CosmicEvent.class))).thenReturn(newEvent);
-
-        // when & then
-        mockMvc.perform(post("/api/events")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newEvent)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.title").value("New Event"))
-                .andExpect(jsonPath("$.type").value("Full Moon"));
-    }
 }

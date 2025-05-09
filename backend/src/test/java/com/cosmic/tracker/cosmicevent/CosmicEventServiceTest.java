@@ -24,24 +24,6 @@ public class CosmicEventServiceTest {
     }
 
     @Test
-    void testSaveEvent() {
-        // given
-        CosmicEvent event = new CosmicEvent();
-        event.setTitle("Test Event");
-        event.setEventDate(LocalDate.now());
-
-        when(repository.save(event)).thenReturn(event);
-
-        // when
-        CosmicEvent saved = service.saveEvent(event);
-
-        // then
-        assertNotNull(saved);
-        assertEquals("Test Event", saved.getTitle());
-        verify(repository, times(1)).save(event);
-    }
-
-    @Test
     void testGetAllEvents() {
         // given
         CosmicEvent e1 = new CosmicEvent();

@@ -1,103 +1,187 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven 3'
+    }
+
     environment {
-        DOCKER_BUILDKIT = '1'
+        PROJECT_DIR = 'backend'
     }
 
     stages {
+
         stage('Checkout') {
-            steps {
-                checkout scm
-            }
+            steps { checkout scm }
         }
 
         stage('Verify Structure') {
-            steps {
-                sh 'ls -la ${WORKSPACE}/backend'
-            }
+            steps { sh 'ls -la $PROJECT_DIR' }
         }
 
-        stage('Run Tests') {
-            tools {
-                maven 'Maven 3'
-            }
+        stage('Build JAR') {
             steps {
-                dir('backend') {
-                    sh 'mvn test'
+                dir("$PROJECT_DIR") {
+                    sh 'mvn -B clean package -DskipTests'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts artifacts: "$PROJECT_DIR/target/*.jar", fingerprint: true
                 }
             }
         }
 
-        stage('Build Jar') {
-            tools {
-                maven 'Maven 3'
+        stage('Docker build (local)') {
+            environment {
+                IMAGE_NAME = 'cosmo-backend'
+                IMAGE_TAG  = "${env.BUILD_NUMBER}"
             }
             steps {
-                dir('backend') {
-                    sh 'mvn clean package -DskipTests'
-                }
+                sh '''
+                echo ">> Docker client & server:"
+                docker version
+
+                echo ">> Building backend image:"
+                docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ${PROJECT_DIR}
+                '''
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Frontend Docker build (local)') {
+            environment {
+                FE_IMAGE_NAME = 'cosmo-frontend'
+                FE_IMAGE_TAG  = "${env.BUILD_NUMBER}"
+            }
             steps {
-                script {
-                    sh "docker build -t kei077/cosmo-backend:${BUILD_NUMBER} ./backend"
-                    sh "docker tag kei077/cosmo-backend:${BUILD_NUMBER} kei077/cosmo-backend:latest"
-                }
+                sh '''
+                echo ">> Building frontend image:"
+                docker build -t ${FE_IMAGE_NAME}:${FE_IMAGE_TAG} frontend
+                '''
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push image to registry') {
+            environment {
+                REGISTRY      = 'docker.io'
+                REPOSITORY    = 'kei077'
+                IMAGE_NAME    = 'cosmo-backend'
+                IMAGE_TAG     = "${env.BUILD_NUMBER}"
+                DOCKER_CREDS  = credentials('dockerhub-login')
+            }
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                        docker push kei077/cosmo-backend:${BUILD_NUMBER}
-                        docker push kei077/cosmo-backend:latest
+                sh '''
+                echo ">> Logging in to registry"
+                echo "$DOCKER_CREDS_PSW" | docker login $REGISTRY -u "$DOCKER_CREDS_USR" --password-stdin
+
+                echo ">> Tagging and pushing"
+                docker tag ${IMAGE_NAME}:${IMAGE_TAG} $REPOSITORY/${IMAGE_NAME}:${IMAGE_TAG}
+                docker tag ${IMAGE_NAME}:${IMAGE_TAG} $REPOSITORY/${IMAGE_NAME}:latest
+
+                docker push $REPOSITORY/${IMAGE_NAME}:${IMAGE_TAG}
+                docker push $REPOSITORY/${IMAGE_NAME}:latest
+                '''
+            }
+        }
+
+        stage('Frontend - push image') {
+            environment {
+                REGISTRY      = 'docker.io'
+                REPOSITORY    = 'kei077'
+                FE_IMAGE_NAME = 'cosmo-frontend'
+                FE_IMAGE_TAG  = "${env.BUILD_NUMBER}"
+                DOCKER_CREDS  = credentials('dockerhub-login')
+            }
+            steps {
+                sh '''
+                    echo ">> Logging in to registry"
+                    echo "$DOCKER_CREDS_PSW" | docker login $REGISTRY -u "$DOCKER_CREDS_USR" --password-stdin
+
+                    echo ">> Tagging and pushing frontend image"
+                    docker tag ${FE_IMAGE_NAME}:${FE_IMAGE_TAG} $REPOSITORY/${FE_IMAGE_NAME}:${FE_IMAGE_TAG}
+                    docker tag ${FE_IMAGE_NAME}:${FE_IMAGE_TAG} $REPOSITORY/${FE_IMAGE_NAME}:latest
+
+                    docker push $REPOSITORY/${FE_IMAGE_NAME}:${FE_IMAGE_TAG}
+                    docker push $REPOSITORY/${FE_IMAGE_NAME}:latest
                     '''
-                }
             }
         }
 
-        stage('SonarQube Analysis') {
-            tools {
-                maven 'Maven 3'
-            }
+        stage('Deploy & Smoke-test') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-                        sh """
-                            cd backend && \
-                            mvn sonar:sonar \
-                            -Dsonar.projectKey=cosmo-backend \
-                            -Dsonar.host.url=http://192.168.240.198:9000 \
-                            -Dsonar.login=$SONAR_TOKEN
-                        """
+                withCredentials([usernamePassword(
+                        credentialsId: 'db-creds',
+                        usernameVariable: 'DB_USER',
+                        passwordVariable: 'DB_PASS')]) {
+
+                    sh '''#!/usr/bin/env bash
+                        set -euo pipefail
+
+                        echo "▶ exporting DB credentials for compose"
+                        export DATABASE_USERNAME=$DB_USER
+                        export DATABASE_PASSWORD=$DB_PASS
+
+                        echo "▶ Tearing down previous stack"
+                        docker compose -f docker-compose.prod.yml down --remove-orphans
+
+                        echo "▶ Pulling images"
+                        docker compose -f docker-compose.prod.yml pull
+
+                        echo "▶ Starting stack"
+                        docker compose -f docker-compose.prod.yml up -d
+
+                        echo "▶ Waiting for backend health check"
+                        for i in {1..20}; do
+                        if curl -fs http://10.1.3.43:8081/actuator/health | grep -q '"UP"'; then
+                            echo "Backend is UP (waited $((i*3))s)"
+                            exit 0
+                        fi
+                        sleep 3
+                        done
+
+                        echo "Backend failed to become healthy in time"
+                        false
+                        '''
                     }
                 }
-            }
-        }
+                post {
+                    failure {
+                        sh '''#!/usr/bin/env bash
+                        echo "▶ Debugging container connectivity"
 
-        stage('Run App') {
-            when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-            }
-            steps {
-                echo "Launching app with Docker Compose..."
-                sh 'docker-compose up -d'
+                        echo "→ docker ps -a"
+                        docker ps -a || true
+
+                        BACK_ID=$(docker compose -f docker-compose.prod.yml ps -q backend || true)
+
+                        if [[ -n "$BACK_ID" ]]; then
+                        echo; echo "→ Network settings for backend ($BACK_ID)"
+                        if command -v jq >/dev/null 2>&1; then
+                            docker inspect "$BACK_ID" --format '{{json .NetworkSettings}}' | jq .
+                        else
+                            docker inspect "$BACK_ID"
+                        fi
+
+                        echo; echo "→ Curl from Jenkins host"
+                        curl -vv http://10.1.3.43:8081/actuator/health || true
+
+                        echo; echo "→ Curl from inside backend container"
+                        docker exec "$BACK_ID" curl -vv http://10.1.3.43:8081/actuator/health || true
+
+                        echo; echo "→ Logs (last 200 lines)"
+                        docker logs --tail 200 "$BACK_ID" || true
+                        else
+                        echo "Backend container not found."
+                        fi
+                        '''
+                }
             }
         }
     }
 
     post {
-        always {
-            echo "Cleaning up Docker containers..."
-            sh 'docker-compose down || true'
-        }
         failure {
-            echo "Pipeline failed. Please check the logs above."
+            echo 'Pipeline failed check the stage logs above.'
         }
     }
 }

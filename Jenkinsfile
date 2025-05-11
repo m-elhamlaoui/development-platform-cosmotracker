@@ -119,7 +119,7 @@ pipeline {
         stage('Deploy & Smoke-test') {
             steps {
                 script {
-                    def hostIp = sh(script: ''hostname -I | cut -d " " -f1'', returnStdout: true).trim()
+                    def hostIp = sh(script: 'hostname -I | cut -d " " -f1', returnStdout: true).trim()
                     
                     withCredentials([usernamePassword(
                             credentialsId: 'db-creds',

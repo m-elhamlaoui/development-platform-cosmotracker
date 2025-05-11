@@ -142,7 +142,6 @@ pipeline {
                                 for i in {1..20}; do
                                 if curl -fs http://$HOST_IP:8081/actuator/health | grep -q '"UP"'; then
                                     echo 'Detected Host IP: ' + $HOST_IP
-                                    echo "Backend is UP (waited $((i*3))s)"
                                     exit 0
                                 fi
                                 sleep 3

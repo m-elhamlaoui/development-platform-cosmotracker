@@ -5,8 +5,8 @@ services:
     image: postgres:15
     environment:
       POSTGRES_DB: CosmoDB
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
     ports:
       - "5433:5432"
     volumes:
@@ -16,8 +16,8 @@ services:
   backend:
     image: kei077/cosmo-backend:latest   
     environment:
-      DATABASE_USERNAME: ${DATABASE_USERNAME}
-      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
     ports:
       - "8081:8081"
     depends_on: [postgres]

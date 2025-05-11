@@ -119,7 +119,7 @@ pipeline {
         stage('Deploy & Smoke-test') {
             steps {
                 script {
-                    def hostIp = sh(script: 'hostname -I | awk \'{print $1}\'', returnStdout: true).trim()
+                    def hostIp = sh(script: ''hostname -I | cut -d " " -f1'', returnStdout: true).trim()
                     
                     withCredentials([usernamePassword(
                             credentialsId: 'db-creds',
@@ -157,11 +157,6 @@ pipeline {
             post {
                 failure {
                     sh '''#!/usr/bin/env bash
-                    echo "▶ Debugging container connectivity"
-
-                    echo "→ docker ps -a"
-                    docker ps -a || true
-
                     BACK_ID=$(docker compose -f docker-compose.prod.yml ps -q backend || true)
 
                     if [[ -n "$BACK_ID" ]]; then

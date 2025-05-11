@@ -15,10 +15,6 @@ pipeline {
             steps { checkout scm }
         }
 
-        stage('Verify Structure') {
-            steps { sh 'ls -la $PROJECT_DIR' }
-        }
-
         stage('Build JAR') {
             steps {
                 dir("$PROJECT_DIR") {

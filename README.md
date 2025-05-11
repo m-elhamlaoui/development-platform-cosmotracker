@@ -1,37 +1,51 @@
-# Cosmo Tracker Backend
+# Cosmo Tracker - Cosmic Events Tracking Platform
 
-This is the backend service for the Cosmo Tracker project, built with Spring Boot, React and PostgreSQL
- 
-## Setup
+Cosmo Tracker is a full-stack application to help discover, track, and explore cosmic events. The platform provides a seamless way to access detailed information about astronomical events like solar eclipses, meteor showers, planetary transits, and much more.
 
-1. Clone the repository
-2. Create a '.env' file in the root directory (on the same level as frontend and backend folders):
+## Key Features
+- **Comprehensive Event Database**: Search and filter cosmic events by date, type, and visibility.
+- **Personalized Event Tracking**: Users can mark events as favorites for quick access.
+- **Interactive Visualizations**: Real-time 3D visualization of celestial bodies using Three.js.
+- **User Management**: Authentication, profiles, and user-specific dashboards.
 
+## Setup Instructions
+### 1. Clone the Repository
+```bash
+git clone https://github.com/m-elhamlaoui/development-platform-cosmotracker.git
+cd development-platform-cosmotracker
+```
+
+### 2. Configure Environment Variables
+Create a `.env` file in the root directory (same level as the frontend and backend folders) with the following contents:
 ```env
 DATABASE_URL=jdbc:postgresql://your-postgres-host:port/database
 DATABASE_USERNAME=yourusername
 DATABASE_PASSWORD=yourpassword
+```
+Replace the placeholders with your actual PostgreSQL.
 
-( Configure your own DB locally if you want)
-
-> PLEASE replace the values with our Railway PostgresSQL instance.
-
-## Running the Backend
-
-### Commands:
+### 3. Build and Run Backend
 ```bash
 cd backend
+./mvnw clean package
 ./mvnw spring-boot:run
 ```
+The backend should be running at `http://localhost:8081`.
 
-The backend should start on `http://localhost:8081`
-
-## Running the Frontend
-### Commands:
+### 4. Build and Run Frontend
 ```bash
-cd frontend
+cd ../frontend
 npm install
 npm run dev
 ```
+The frontend will be available at `http://localhost:5173`.
 
-The frontend will run on `http://localhost:5173`
+### 5. Dockerized Deployment
+To run the entire stack using Docker:
+```bash
+docker compose up --build
+```
+
+### 6. Access the Application
+- **Frontend**: `http://localhost:5173`
+- **Backend API**: `http://localhost:8081`

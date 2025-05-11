@@ -25,6 +25,9 @@ pipeline {
                 success {
                         echo '----------------------------------------------- TESTS RAN SUCCESSFULLY'
                 }
+                failure {
+                        echo '----------------------------------------------- TESTS FAILED TO RUN'
+                }
             }
         }
 
@@ -48,9 +51,6 @@ pipeline {
             }
             steps {
                 sh '''
-                echo ">> Docker client & server:"
-                docker version
-
                 echo ">> Building backend image:"
                 docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ${PROJECT_DIR}
                 '''
@@ -152,10 +152,6 @@ pipeline {
                 post {
                     failure {
                         sh '''#!/usr/bin/env bash
-                        echo "▶ Debugging container connectivity"
-
-                        echo "→ docker ps -a"
-                        docker ps -a || true
 
                         BACK_ID=$(docker compose -f docker-compose.prod.yml ps -q backend || true)
 

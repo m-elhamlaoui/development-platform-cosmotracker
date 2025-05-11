@@ -125,35 +125,36 @@ pipeline {
                             credentialsId: 'db-creds',
                             usernameVariable: 'DB_USER',
                             passwordVariable: 'DB_PASS')]) {
+                        withEnv(["HOST_IP=${hostIp}"]){
+                            sh """#!/usr/bin/env bash
+                                set -euo pipefail
 
-                        sh """#!/usr/bin/env bash
-                            set -euo pipefail
+                                echo "▶ Tearing down previous stack"
+                                docker compose -f docker-compose.prod.yml down --remove-orphans
 
-                            echo "▶ Tearing down previous stack"
-                            docker compose -f docker-compose.prod.yml down --remove-orphans
+                                echo "▶ Pulling images"
+                                docker compose -f docker-compose.prod.yml pull
 
-                            echo "▶ Pulling images"
-                            docker compose -f docker-compose.prod.yml pull
+                                echo "▶ Starting stack"
+                                DB_USER=$DB_USER DB_PASS=$DB_PASS docker compose -f docker-compose.prod.yml up -d
 
-                            echo "▶ Starting stack"
-                            DB_USER=$DB_USER DB_PASS=$DB_PASS docker compose -f docker-compose.prod.yml up -d
+                                echo "▶ Waiting for backend health check"
+                                for i in {1..20}; do
+                                if curl -fs http://$HOST_IP:8081/actuator/health | grep -q '"UP"'; then
+                                    echo 'Detected Host IP: ' + $HOST_IP
+                                    echo "Backend is UP (waited $((i*3))s)"
+                                    exit 0
+                                fi
+                                sleep 3
+                                done
 
-                            echo "▶ Waiting for backend health check"
-                            for i in {1..20}; do
-                            if curl -fs http://${hostIp}:8081/actuator/health | grep -q '"UP"'; then
-                                echo 'Detected Host IP: ' + hostIp
-                                echo "Backend is UP (waited $((i*3))s)"
-                                exit 0
-                            fi
-                            sleep 3
-                            done
-
-                            echo "Backend failed to become healthy in time"
-                            false
-                        """
+                                echo "Backend failed to become healthy in time"
+                                false
+                            """
+                        }
                     }
                 }
-            }
+            }   
             post {
                 failure {
                     sh '''#!/usr/bin/env bash

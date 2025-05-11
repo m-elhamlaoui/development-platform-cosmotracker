@@ -22,7 +22,9 @@ pipeline {
                 }
             }
             post {
-                echo '----------------------------------------------- TESTS RAN SUCCESSFULLY'
+                success {
+                        echo '----------------------------------------------- TESTS RAN SUCCESSFULLY'
+                }
             }
         }
 

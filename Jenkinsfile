@@ -119,13 +119,13 @@ pipeline {
         stage('Deploy & Smoke-test') {
             steps {
                 script {
-                    def hostIp = sh(script: 'hostname -I | cut -d " " -f1', returnStdout: true).trim()
+                    def hostIp = sh(script: "hostname -I | awk '{print $1}'", returnStdout: true).trim()
                     
                     withCredentials([usernamePassword(
                             credentialsId: 'db-creds',
                             usernameVariable: 'DB_USER',
-                            passwordVariable: 'DB_PASS')]) {
-                        withEnv(["HOST_IP=${hostIp}"]){
+                            passwordVariable: 'DB_PASS',
+                            HOST_IP=${hostIp})]) {
                             sh """#!/usr/bin/env bash
                                 set -euo pipefail
 
@@ -150,7 +150,6 @@ pipeline {
                                 echo "Backend failed to become healthy in time"
                                 false
                             """
-                        }
                     }
                 }
             }   

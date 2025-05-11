@@ -141,7 +141,7 @@ pipeline {
                             echo "▶ Waiting for backend health check"
                             for i in {1..20}; do
                             if curl -fs http://${hostIp}:8081/actuator/health | grep -q '"UP"'; then
-                                echo "Detected Host IP: ${hostIp}"
+                                echo 'Detected Host IP: ' + hostIp
                                 echo "Backend is UP (waited $((i*3))s)"
                                 exit 0
                             fi

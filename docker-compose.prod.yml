@@ -16,8 +16,8 @@ services:
   backend:
     image: kei077/cosmo-backend:latest   
     environment:
-      DB_USER: ${DB_USER}
-      DB_PASS: ${DB_PASS}
+      DATABASE_USER: ${DB_USER}
+      DATABASE_PASSWORD: ${DB_PASS}
     ports:
       - "8081:8081"
     depends_on: [postgres]

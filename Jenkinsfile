@@ -113,10 +113,6 @@ pipeline {
                     sh '''#!/usr/bin/env bash
                         set -euo pipefail
 
-                        echo "▶ exporting DB credentials for compose"
-                        export DATABASE_USERNAME=$DB_USER
-                        export DATABASE_PASSWORD=$DB_PASS
-
                         echo "▶ Tearing down previous stack"
                         docker compose -f docker-compose.prod.yml down --remove-orphans
 
@@ -124,7 +120,7 @@ pipeline {
                         docker compose -f docker-compose.prod.yml pull
 
                         echo "▶ Starting stack"
-                        docker compose -f docker-compose.prod.yml up -d
+                        DB_USER=$DB_USER DB_PASS=$DB_PASS docker compose -f docker-compose.prod.yml up -d
 
                         echo "▶ Waiting for backend health check"
                         for i in {1..20}; do

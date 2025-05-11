@@ -15,6 +15,17 @@ pipeline {
             steps { checkout scm }
         }
 
+        stage('Run Tests'){
+            steps {
+                dir("$PROJECT_DIR"){
+                    sh 'mvn test'
+                }
+            }
+            post {
+                echo '----------------------------------------------- TESTS RAN SUCCESSFULLY'
+            }
+        }
+
         stage('Build JAR') {
             steps {
                 dir("$PROJECT_DIR") {

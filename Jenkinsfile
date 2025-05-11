@@ -15,15 +15,15 @@ pipeline {
             steps { checkout scm }
         }
 
-        stage('Run Tests'){
+        stage('Run Tests') {
             steps {
-                dir("$PROJECT_DIR"){
+                dir("$PROJECT_DIR") {
                     sh 'mvn test'
                 }
             }
             post {
                 success {
-                        echo '----------------------------------------------- TESTS RAN SUCCESSFULLY'
+                    echo '----------------------------------------------- TESTS RAN SUCCESSFULLY'
                 }
             }
         }
@@ -118,67 +118,72 @@ pipeline {
 
         stage('Deploy & Smoke-test') {
             steps {
-                withCredentials([usernamePassword(
-                        credentialsId: 'db-creds',
-                        usernameVariable: 'DB_USER',
-                        passwordVariable: 'DB_PASS')]) {
+                script {
+                    def hostIp = sh(script: "hostname -I | awk '{print $1}'", returnStdout: true).trim()
+                    
+                    withCredentials([usernamePassword(
+                            credentialsId: 'db-creds',
+                            usernameVariable: 'DB_USER',
+                            passwordVariable: 'DB_PASS')]) {
 
-                    sh '''#!/usr/bin/env bash
-                        set -euo pipefail
+                        sh """#!/usr/bin/env bash
+                            set -euo pipefail
 
-                        echo "▶ Tearing down previous stack"
-                        docker compose -f docker-compose.prod.yml down --remove-orphans
+                            echo "▶ Tearing down previous stack"
+                            docker compose -f docker-compose.prod.yml down --remove-orphans
 
-                        echo "▶ Pulling images"
-                        docker compose -f docker-compose.prod.yml pull
+                            echo "▶ Pulling images"
+                            docker compose -f docker-compose.prod.yml pull
 
-                        echo "▶ Starting stack"
-                        DB_USER=$DB_USER DB_PASS=$DB_PASS docker compose -f docker-compose.prod.yml up -d
+                            echo "▶ Starting stack"
+                            DB_USER=$DB_USER DB_PASS=$DB_PASS docker compose -f docker-compose.prod.yml up -d
 
-                        echo "▶ Waiting for backend health check"
-                        for i in {1..20}; do
-                        if curl -fs http://10.1.3.43:8081/actuator/health | grep -q '"UP"'; then
-                            echo "Backend is UP (waited $((i*3))s)"
-                            exit 0
-                        fi
-                        sleep 3
-                        done
+                            echo "▶ Waiting for backend health check"
+                            for i in {1..20}; do
+                            if curl -fs http://${hostIp}:8081/actuator/health | grep -q '"UP"'; then
+                                echo "Detected Host IP: ${hostIp}"
+                                echo "Backend is UP (waited $((i*3))s)"
+                                exit 0
+                            fi
+                            sleep 3
+                            done
 
-                        echo "Backend failed to become healthy in time"
-                        false
-                        '''
+                            echo "Backend failed to become healthy in time"
+                            false
+                        """
                     }
                 }
-                post {
-                    failure {
-                        sh '''#!/usr/bin/env bash
-                        echo "▶ Debugging container connectivity"
+            }
+            post {
+                failure {
+                    sh '''#!/usr/bin/env bash
+                    echo "▶ Debugging container connectivity"
 
-                        echo "→ docker ps -a"
-                        docker ps -a || true
+                    echo "→ docker ps -a"
+                    docker ps -a || true
 
-                        BACK_ID=$(docker compose -f docker-compose.prod.yml ps -q backend || true)
+                    BACK_ID=$(docker compose -f docker-compose.prod.yml ps -q backend || true)
 
-                        if [[ -n "$BACK_ID" ]]; then
-                        echo; echo "→ Network settings for backend ($BACK_ID)"
-                        if command -v jq >/dev/null 2>&1; then
-                            docker inspect "$BACK_ID" --format '{{json .NetworkSettings}}' | jq .
-                        else
-                            docker inspect "$BACK_ID"
-                        fi
+                    if [[ -n "$BACK_ID" ]]; then
+                    echo; echo "→ Network settings for backend ($BACK_ID)"
+                    if command -v jq >/dev/null 2>&1; then
+                        docker inspect "$BACK_ID" --format '{{json .NetworkSettings}}' | jq .
+                    else
+                        docker inspect "$BACK_ID"
+                    fi
 
-                        echo; echo "→ Curl from Jenkins host"
-                        curl -vv http://10.1.3.43:8081/actuator/health || true
+                    echo; echo "→ Curl from Jenkins host"
+                    curl -vv http://${hostIp}:8081/actuator/health || true
 
-                        echo; echo "→ Curl from inside backend container"
-                        docker exec "$BACK_ID" curl -vv http://10.1.3.43:8081/actuator/health || true
+                    echo; echo "→ Curl from inside backend container"
+                    docker exec "$BACK_ID" curl -vv http://localhost:8081/actuator/health || true
 
-                        echo; echo "→ Logs (last 200 lines)"
-                        docker logs --tail 200 "$BACK_ID" || true
-                        else
-                        echo "Backend container not found."
-                        fi
-                        '''
+                    echo; echo "→ Logs (last 200 lines)"
+                    docker logs --tail 200 "$BACK_ID" || true
+                    else
+                    echo "Backend container not found."
+                    fi
+                    '''
                 }
             }
         }

@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
-      - my_network
+      - dev_network
 
   backend:
     build:
@@ -28,7 +28,7 @@ services:
     depends_on:
       - postgres
     networks:
-      - my_network
+      - dev_network
 
   frontend:
     build:
@@ -40,10 +40,10 @@ services:
     depends_on:
       - backend
     networks:
-      - my_network
+      - dev_network
 
 volumes:
   postgres_data:
 
 networks:
-  my_network:
+  dev_network:

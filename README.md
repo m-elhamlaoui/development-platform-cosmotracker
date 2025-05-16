@@ -1,37 +1,42 @@
-# Cosmo Tracker Backend
+# Cosmo Tracker - Cosmic Events Tracking Platform
+Cosmo Tracker is a full-stack application to help discover, track, and explore cosmic events. The platform provides a seamless way to access detailed information about astronomical events like solar eclipses, meteor showers, planetary transits, and much more.
 
-This is the backend service for the Cosmo Tracker project, built with Spring Boot, React and PostgreSQL
- 
-## Setup
+## Setup Instructions
+### 1. Clone the Repository
+```bash
+git clone https://github.com/m-elhamlaoui/development-platform-cosmotracker.git
+cd development-platform-cosmotracker
+```
 
-1. Clone the repository
-2. Create a '.env' file in the root directory (on the same level as frontend and backend folders):
-
+### 2. Configure Environment Variables
+Create a `.env` file in the root directory with the following contents:
 ```env
 DATABASE_URL=jdbc:postgresql://your-postgres-host:port/database
 DATABASE_USERNAME=yourusername
 DATABASE_PASSWORD=yourpassword
-
-( Configure your own DB locally if you want)
-
-> PLEASE replace the values with our Railway PostgresSQL instance.
-
-## Running the Backend
-
-### Commands:
-```bash
-cd backend
-./mvnw spring-boot:run
 ```
 
-The backend should start on `http://localhost:8081`
-
-## Running the Frontend
-### Commands:
+### 3. Build and Run Backend
 ```bash
-cd frontend
+cd backend
+./mvnw clean package
+./mvnw spring-boot:run
+```
+The backend should be running at `http://localhost:8081`.
+
+### 4. Build and Run Frontend
+```bash
+cd ../frontend
 npm install
 npm run dev
 ```
+The frontend will be available at `http://localhost:5173`.
 
-The frontend will run on `http://localhost:5173`
+### 5. Dockerized Deployment
+To run the entire stack using Docker:
+```bash
+docker compose up -f docker-compose.prod.yml --build
+```
+### 6. Access the Application
+- **Frontend**: `http://localhost:5173`
+- **Backend API**: `http://localhost:8081`

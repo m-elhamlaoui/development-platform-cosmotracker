@@ -11,7 +11,8 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks: [my_network]
+    networks: 
+      - prod_network
 
   backend:
     image: kei077/cosmo-backend:latest   
@@ -20,34 +21,41 @@ services:
       DATABASE_PASSWORD: ${DB_PASS}
     ports:
       - "8081:8081"
-    depends_on: [postgres]
-    networks: [my_network]
+    depends_on: 
+      - postgres
+    networks: 
+      - prod_network
 
   frontend:
     image: kei077/cosmo-frontend:latest    
     ports:
-      - "5173:80"                          
-    depends_on: [backend]
-    networks: [my_network]
+      - "5173:80"
+    depends_on: 
+      - backend
+    networks: 
+      - prod_network
 
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports: ["9090:9090"]
-    networks: [my_network]
+    networks: 
+      - prod_network
 
   grafana:
     image: grafana/grafana
     ports: ["3000:3000"]
-    depends_on: [prometheus]
+    depends_on: 
+      - prometheus
     volumes:
       - grafana_data:/var/lib/grafana
-    networks: [my_network]
+    networks: 
+      - prod_network
 
 volumes:
   postgres_data:
   grafana_data:
 
 networks:
-  my_network:
+  prod_network:

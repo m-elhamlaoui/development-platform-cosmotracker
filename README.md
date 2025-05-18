@@ -11,9 +11,8 @@ cd development-platform-cosmotracker
 ### 2. Configure Environment Variables
 Create a `.env` file in the root directory with the following contents:
 ```env
-DATABASE_URL=jdbc:postgresql://your-postgres-host:port/database
-DATABASE_USERNAME=yourusername
-DATABASE_PASSWORD=yourpassword
+DATABASE_USERNAME=username
+DATABASE_PASSWORD=password
 ```
 
 ### 3. Build and Run Backend

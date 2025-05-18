@@ -9,9 +9,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/events")
 public class CosmicEventController {
-    @Autowired
     private final CosmicEventService service;
-
+    
+    @Autowired
     public CosmicEventController(CosmicEventService service) {
         this.service = service;
     }

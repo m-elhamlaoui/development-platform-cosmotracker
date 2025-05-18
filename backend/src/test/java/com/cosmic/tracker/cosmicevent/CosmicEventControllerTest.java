@@ -1,6 +1,5 @@
 package com.cosmic.tracker.cosmicevent;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,9 +26,6 @@ public class CosmicEventControllerTest {
     // TODO: remove the MockBean annotation and replace it with MockitoBean instead
     @MockBean
     private CosmicEventService service;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     //TODO: remove AutoConfigureMockMvc and add MockUser for each test instead
     @Test

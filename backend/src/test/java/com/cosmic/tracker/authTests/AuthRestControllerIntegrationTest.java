@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.security.Key;
@@ -23,19 +24,8 @@ import java.util.Date;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = {
-                // point to an in-mem H2
-                "spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1",
-                "spring.datasource.driverClassName=org.h2.Driver",
-                "spring.datasource.username=sa",
-                "spring.datasource.password=",
-                // auto-create/drop tables from your JPA entities
-                "spring.jpa.hibernate.ddl-auto=create-drop"
-        }
-)
+@ActiveProfiles("test")
+@SpringBootTest
 @AutoConfigureMockMvc
 class AuthRestControllerIntegrationTest {
 

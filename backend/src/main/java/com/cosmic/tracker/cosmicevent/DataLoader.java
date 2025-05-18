@@ -27,12 +27,12 @@ public class DataLoader {
                 List<CosmicEvent> events = mapper.readValue(inputStream, new TypeReference<>() {});
                 repository.saveAll(events);
 
-                System.out.println("✔ Loaded initial cosmic events into DB.");
+                System.out.println(" Loaded initial cosmic events into DB.");
             } else {
-                System.out.println("ℹ️ DB already contains events, skipping initial load.");
+                System.out.println(" DB already contains events, skipping initial load.");
             }
         } catch (Exception e) {
-            System.err.println("❌ Error loading cosmic events: " + e.getMessage());
+            System.err.println(" Error loading cosmic events: " + e.getMessage());
         }
     }
 }

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: HamlaouiDB-Cont
+    environment:
+      POSTGRES_DB: CosmoDB
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5543:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - dev_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: HamlaouiBackend-Cont
+    environment:
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "8082:8081"
+    depends_on:
+      - postgres
+    networks:
+      - dev_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: HamlaouiFrontend-Cont
+    ports:
+      - "5174:5173"
+    depends_on:
+      - backend
+    networks:
+      - dev_network
+
+volumes:
+  postgres_data:
+
+networks:
+  dev_network:

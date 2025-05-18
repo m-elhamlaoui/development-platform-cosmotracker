@@ -1,5 +1,6 @@
-package com.cosmic.tracker.Users;
+package com.cosmic.tracker.favorites;
 
+import com.cosmic.tracker.Users.MyUser;
 import com.cosmic.tracker.cosmicevent.CosmicEvent;
 import org.springframework.data.jpa.repository.JpaRepository;
 

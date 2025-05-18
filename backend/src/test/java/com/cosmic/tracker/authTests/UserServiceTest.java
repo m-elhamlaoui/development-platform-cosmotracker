@@ -9,34 +9,38 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.mockito.Mockito.*;
 
-public class UserServiceTest {
+class UserServiceTest {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
     private UserService userService;
 
     @BeforeEach
-    public void setup() {
-        userRepository = mock(UserRepository.class);
+    void givenMocksAndService() {
+        userRepository  = mock(UserRepository.class);
         passwordEncoder = mock(PasswordEncoder.class);
+        // Given a UserService constructed with mocked dependencies
         userService = new UserService(userRepository, passwordEncoder);
     }
 
     @Test
-    public void testSaveUser_EncodesPasswordAndSaves() {
-        String username = "testUser";
-        String rawPassword = "password";
-        String encodedPassword = "encodedPassword";
-        String email = "test@example.com";
+    void shouldEncodePasswordAndSaveUser_whenGivenValidUsernamePasswordAndEmail() {
+        // Given
+        String username     = "testUser";
+        String rawPassword  = "password";
+        String email        = "user@example.com";
+        String encodedPass  = "ENCODED_PASS";
+        when(passwordEncoder.encode(rawPassword))
+                .thenReturn(encodedPass);
 
-        when(passwordEncoder.encode(rawPassword)).thenReturn(encodedPassword);
-
+        // When
         userService.save(username, rawPassword, email);
 
+        // Then
         verify(passwordEncoder).encode(rawPassword);
-        verify(userRepository).save(Mockito.argThat(user ->
+        verify(userRepository).save(argThat(user ->
                 user.getUsername().equals(username) &&
-                        user.getPassword().equals(encodedPassword) &&
+                        user.getPassword().equals(encodedPass) &&
                         user.getEmail().equals(email)
         ));
     }

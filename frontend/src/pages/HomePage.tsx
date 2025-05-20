@@ -6,6 +6,7 @@ import Button from '../components/ui/Button';
 import { getUpcomingEvents } from '../data/mockEvents';
 import { useAuth } from '../context/AuthContext';
 import EventsList from '../components/events/EventsList';
+import StarMap from '../components/star-map/StarMap';
 
 const HomePage: React.FC = () => {
   const { isAuthenticated, user } = useAuth();
@@ -20,7 +21,7 @@ const HomePage: React.FC = () => {
           
           <div className="max-w-7xl mx-auto text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 animate-float">
-              Explore the Cosmos
+              Explore the Cosmoss
             </h1>
             <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
               Track celestial events, discover astronomical wonders, and never miss a cosmic spectacle again.
@@ -52,8 +53,18 @@ const HomePage: React.FC = () => {
           </div>
         </section>
         
+        {/* Star Map Section */}
+        <section className="py-12 px-4">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-3xl font-bold text-white mb-8 text-center">
+              Current Celestial Positions
+            </h2>
+            <StarMap />
+          </div>
+        </section>
+        
         {/* Features Section */}
-        <section className="py-16 px-4">
+        <section className="py-12 px-4">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-3xl font-bold text-white mb-12 text-center">
               Discover the Universe with CosmoTracker
@@ -84,9 +95,9 @@ const HomePage: React.FC = () => {
                 <div className="bg-accent-900/50 w-12 h-12 rounded-full flex items-center justify-center mb-4">
                   <Search className="h-6 w-6 text-accent-400" />
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">Detailed Information</h3>
+                <h3 className="text-xl font-semibold text-white mb-2">Interactive Star Map</h3>
                 <p className="text-slate-400">
-                  Access comprehensive details about each event, including visibility information and scientific explanations.
+                  Explore the current positions of planets and celestial bodies in our interactive star map.
                 </p>
               </div>
             </div>

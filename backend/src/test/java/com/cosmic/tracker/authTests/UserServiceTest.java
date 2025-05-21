@@ -4,7 +4,6 @@ import com.cosmic.tracker.Users.UserRepository;
 import com.cosmic.tracker.Users.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.mockito.Mockito.*;

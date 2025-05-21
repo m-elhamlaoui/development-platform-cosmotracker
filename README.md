@@ -6,7 +6,7 @@ Cosmo Tracker is a full-stack application to help discover, track, and explore c
 ### Prerequisites
 - Docker and Docker Compose installed
 - Git installed
-- Java 21 or later (for local development)
+- Java 17 or later (for local development)
 - Node.js and npm (for local development)
 
 ### 1. Clone the Repository
@@ -39,7 +39,7 @@ docker compose -f docker-compose.dev.yml up --build
 The services will be available at:
 - Frontend: http://localhost:5174
 - Backend API: http://localhost:8082
-- PostgreSQL: localhost:5543
+- PostgreSQL: http://localhost:5543
 
 #### Production Environment
 1. Create a `.env` file in the root directory:
@@ -63,7 +63,7 @@ docker compose -f docker-compose.prod.yml up --build
 The services will be available at:
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8081
-- PostgreSQL: localhost:5433
+- PostgreSQL: http://localhost:5433
 - Prometheus: http://localhost:9090
 - Grafana: http://localhost:3000
 

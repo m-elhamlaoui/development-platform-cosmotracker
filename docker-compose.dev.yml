@@ -21,6 +21,7 @@ services:
       dockerfile: Dockerfile
     container_name: HamlaouiBackend-Cont
     environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       DATABASE_USERNAME: ${DATABASE_USERNAME}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
     ports:
@@ -29,6 +30,8 @@ services:
       - postgres
     networks:
       - dev_network
+    env_file:
+      - .env
 
   frontend:
     build:

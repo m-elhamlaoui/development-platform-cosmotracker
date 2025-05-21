@@ -1,43 +1,51 @@
 package com.cosmic.tracker.cosmicevent;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = CosmicEventController.class)
-@Import(TestSecurityConfig.class)
+@SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles("test")
 public class CosmicEventControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    // TODO: remove the MockBean annotation and replace it with MockitoBean instead
-    @MockBean
-    private CosmicEventService service;
+    @Autowired
+    private CosmicEventRepository repository;
 
-    //TODO: remove AutoConfigureMockMvc and add MockUser for each test instead
+    @BeforeEach
+    void setUp() {
+        repository.deleteAll(); // we make sure the DB is empty before running tests
+
+        CosmicEvent event1 = new CosmicEvent();
+        event1.setTitle("Test Event");
+        event1.setEventDate(LocalDate.of(2025, 1, 1));
+        event1.setType("Generic");
+
+        CosmicEvent event2 = new CosmicEvent();
+        event2.setTitle("Meteor Shower");
+        event2.setEventDate(LocalDate.now().plusDays(5));
+        event2.setType("Meteor Shower");
+
+        repository.saveAll(List.of(event1, event2));
+    }
+
     @Test
     void testGetAllEvents() throws Exception {
-        // given
-        CosmicEvent event = new CosmicEvent();
-        event.setTitle("Test Event");
-        event.setEventDate(LocalDate.of(2025, 1, 1));
-
-        when(service.getAllEvents()).thenReturn(List.of(event));
-
-        // when & then
+        // When - a GET request is made to retrieve all events from db
+        // Then
         mockMvc.perform(get("/api/events"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Test Event"));
@@ -45,34 +53,19 @@ public class CosmicEventControllerTest {
 
     @Test
     void testGetEventsByType() throws Exception {
-        // given
-        CosmicEvent event = new CosmicEvent();
-        event.setTitle("Meteor Shower");
-        event.setType("Meteor Shower");
-
-        when(service.getEventsByType("Meteor Shower")).thenReturn(List.of(event));
-
-        // when & then
-        mockMvc.perform(get("/api/events")
-                        .param("type", "Meteor Shower")) // only this param!
+        // When - a GET request is made to retrieve a specific type of events
+        // Then 
+        mockMvc.perform(get("/api/events").param("type", "Meteor Shower"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].type").value("Meteor Shower"));
     }
 
     @Test
     void testGetUpcomingEvents() throws Exception {
-        // given
-        CosmicEvent event = new CosmicEvent();
-        event.setTitle("Future Event");
-        event.setEventDate(LocalDate.now().plusDays(10));
-
-        when(service.getUpcomingEvents()).thenReturn(List.of(event));
-
-        // when & then
-        mockMvc.perform(get("/api/events")
-                        .param("fromToday", "true")) // only this param!
+        // When - a GET request is made to retrieve upcoming events today
+        // Then
+        mockMvc.perform(get("/api/events").param("fromToday", "true"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].title").value("Future Event"));
+                .andExpect(jsonPath("$[0].title").value("Meteor Shower"));
     }
-
 }

@@ -48,7 +48,7 @@ pipeline {
                                 }
                             }
                         }
-                        
+
                         stage('Build & Push Backend Image') {
                             environment {
                                 IMAGE_NAME = 'cosmo-backend'
@@ -62,7 +62,7 @@ pipeline {
                                             -t $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION} \
                                             -t $REPOSITORY/${IMAGE_NAME}:latest \
                                             backend
-                                        
+
                                         docker push $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION}
                                         docker push $REPOSITORY/${IMAGE_NAME}:latest
                                     '''
@@ -71,7 +71,7 @@ pipeline {
                         }
                     }
                 }
-                
+
                 stage('Frontend') {
                     environment {
                         IMAGE_NAME = 'cosmo-frontend'
@@ -80,14 +80,14 @@ pipeline {
                         script {
                             sh '''
                                 docker pull $REPOSITORY/${IMAGE_NAME}:latest || true
-                                
+
                                 docker build \
                                     --cache-from $REPOSITORY/${IMAGE_NAME}:latest \
                                     --build-arg BUILDKIT_INLINE_CACHE=1 \
                                     -t $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION} \
                                     -t $REPOSITORY/${IMAGE_NAME}:latest \
                                     frontend
-                                
+
                                 docker push $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION}
                                 docker push $REPOSITORY/${IMAGE_NAME}:latest
                             '''
@@ -109,6 +109,27 @@ pipeline {
             }
         }
 
+        stage('Deploy') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'db-creds',
+                        usernameVariable: 'DB_USER',
+                        passwordVariable: 'DB_PASS'
+                    )
+                ]) {
+                    sh '''
+                        set -e
+                        export DATABASE_USERNAME=$DB_USER
+                        export DATABASE_PASSWORD=$DB_PASS
+
+                        docker compose -f docker-compose.prod.yml down --remove-orphans
+                        docker compose -f docker-compose.prod.yml pull
+                        docker compose -f docker-compose.prod.yml up -d
+                    '''
+                }
+            }
+        }
     }
 
     post {
@@ -121,7 +142,7 @@ pipeline {
             echo "- $REPOSITORY/cosmo-backend:${BUILD_VERSION}"
             echo "- $REPOSITORY/cosmo-frontend:${BUILD_VERSION}"
         }
-        failure { 
+        failure {
             echo 'Pipeline failed — check stage logs.'
         }
     }

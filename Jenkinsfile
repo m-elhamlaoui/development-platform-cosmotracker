@@ -120,8 +120,8 @@ pipeline {
                 ]) {
                     sh '''
                         set -e
-                        export DATABASE_USERNAME=$DB_USER
-                        export DATABASE_PASSWORD=$DB_PASS
+                        export DB_USER=$DB_USER
+                        export DB_PASS=$DB_PASS
 
                         docker compose -f docker-compose.prod.yml down --remove-orphans
                         docker compose -f docker-compose.prod.yml pull

@@ -8,6 +8,7 @@ pipeline {
         REPOSITORY    = 'kei077'
         BUILD_VERSION = "${env.BUILD_NUMBER}"
         DOCKER_CREDS  = credentials('dockerhub-login')
+        SCANNER_HOME = tool 'sonar-scanner'
     }
 
     stages {
@@ -93,6 +94,18 @@ pipeline {
                         }
                     }
                 }
+            }
+        }
+
+        stage('Sonarqube Analysis') {
+            steps {
+                sh '''
+                cd backend && \
+                mvn sonar:sonar \
+                -Dsonar.projectKey=cosmo-backend \
+                -Dsonar.host.url=http://192.168.125.212:9000 \
+                -Dsonar.login=squ_4138c0eb76f0f334a2a1754462b9ede188906f95
+                '''
             }
         }
 

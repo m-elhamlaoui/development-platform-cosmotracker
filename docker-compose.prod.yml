@@ -51,6 +51,15 @@ services:
     networks: 
       - prod_network
 
+  sonarqube:
+  image: sonarqube:lts
+  ports:
+    - "9000:9000"
+  networks:
+    - prod_network
+  environment:
+    - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+
 volumes:
   postgres_data:
   grafana_data:

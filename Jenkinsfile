@@ -99,13 +99,15 @@ pipeline {
 
         stage('Sonarqube Analysis') {
             steps {
-                sh '''
-                cd backend && \
-                mvn sonar:sonar \
-                -Dsonar.projectKey=cosmo-backend \
-                -Dsonar.host.url=http://192.168.43.92:9000
-                -Dsonar.login=squ_82f93280a1d0d5ef42d44785e86fd2d16629e2b1
-                '''
+                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+                    sh '''
+                        cd backend && \
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=cosmo-backend \
+                        -Dsonar.host.url=http://192.168.43.92:9000 \
+                        -Dsonar.login=$SONAR_TOKEN
+                    '''
+                }
             }
         }
 

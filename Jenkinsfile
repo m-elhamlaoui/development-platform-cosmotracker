@@ -8,7 +8,6 @@ pipeline {
         REPOSITORY    = 'kei077'
         BUILD_VERSION = "${env.BUILD_NUMBER}"
         DOCKER_CREDS  = credentials('dockerhub-login')
-        SCANNER_HOME = tool 'sonar-scanner'
     }
 
     stages {

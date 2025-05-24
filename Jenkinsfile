@@ -97,20 +97,6 @@ pipeline {
             }
         }
 
-        stage('Sonarqube Analysis') {
-            steps {
-                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                    sh '''
-                        cd backend && \
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=cosmo-backend \
-                        -Dsonar.host.url=http://10.1.3.89:9000 \
-                        -Dsonar.login=$SONAR_TOKEN
-                    '''
-                }
-            }
-        }
-
         stage('Deploy') {
             steps {
                 withCredentials([

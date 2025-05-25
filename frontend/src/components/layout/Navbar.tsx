@@ -31,9 +31,9 @@ const Navbar: React.FC = () => {
                 <NavLink to="/"       icon={<Home />}     label="Home"     active={isActive('/')} />
                 <NavLink to="/events" icon={<Calendar />} label="All Events" active={isActive('/events')} />
                 <NavLink to="/monthly"icon={<Calendar />} label="This Month" active={isActive('/monthly')} />
-                <NavLink to="/apod"    icon={<Image />}    label="APOD"      active={isActive('/apod')} />
                 <NavLink to="/favorites" icon={<Star />}  label="Favorites" active={isActive('/favorites')} />
                 <NavLink to="/profile" icon={<User />}     label="Profile"   active={isActive('/profile')} />
+                <NavLink to="/apod"    icon={<Image />}    label="APOD"      active={isActive('/apod')} />
 
                 <Button
                   variant="ghost"

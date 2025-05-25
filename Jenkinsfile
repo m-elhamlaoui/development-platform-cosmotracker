@@ -11,7 +11,6 @@ pipeline {
     }
 
     stages {
-
         stage('Docker Test') {
             steps {
                 sh 'whoami && docker ps'
@@ -60,18 +59,20 @@ pipeline {
                                 IMAGE_NAME = 'cosmo-backend'
                             }
                             steps {
-                                script {
-                                    sh '''
-                                        docker build \
-                                            --cache-from $REPOSITORY/${IMAGE_NAME}:latest \
-                                            --build-arg BUILDKIT_INLINE_CACHE=1 \
-                                            -t $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION} \
-                                            -t $REPOSITORY/${IMAGE_NAME}:latest \
-                                            backend
+                                dir('backend') {
+                                    script {
+                                        sh '''
+                                            docker build \
+                                                --cache-from $REPOSITORY/${IMAGE_NAME}:latest \
+                                                --build-arg BUILDKIT_INLINE_CACHE=1 \
+                                                -t $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION} \
+                                                -t $REPOSITORY/${IMAGE_NAME}:latest \
+                                                .
 
-                                        docker push $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION}
-                                        docker push $REPOSITORY/${IMAGE_NAME}:latest
-                                    '''
+                                            docker push $REPOSITORY/${IMAGE_NAME}:${BUILD_VERSION}
+                                            docker push $REPOSITORY/${IMAGE_NAME}:latest
+                                        '''
+                                    }
                                 }
                             }
                         }

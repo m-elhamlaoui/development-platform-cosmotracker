@@ -15,12 +15,16 @@ CosmoTracker is a full-stack application designed to help astronomy enthusiasts 
 - **Responsive Design**: Modern React-based frontend with Tailwind CSS  
 
 ---
+## Video Demonstration
+Link for the video : https://drive.google.com/drive/folders/1f_NaOYMMaEiRxC0XCE8zLCMA1opPrbLE
+
 
 ## Architecture
 
-![overall project architecture](assets/architecture.png)
+![overall project architecture](assets/projectarchitecture.png)
 
 ![project backend architecture](assets/backend1.png)
+
 
 ## Technology Stack
 

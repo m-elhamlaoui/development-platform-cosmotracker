@@ -10,7 +10,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks: 
-      - pipeline_prod_network
+      - prod_network
 
   backend:
     image: kei077/cosmo-backend:latest   
@@ -22,7 +22,7 @@ services:
     depends_on: 
       - postgres
     networks: 
-      - pipeline_prod_network
+      - prod_network
 
   frontend:
     image: kei077/cosmo-frontend:latest    
@@ -31,7 +31,7 @@ services:
     depends_on: 
       - backend
     networks: 
-      - pipeline_prod_network
+      - prod_network
 
   prometheus:
     image: prom/prometheus
@@ -39,7 +39,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/
     ports: ["9090:9090"]
     networks: 
-      - pipeline_prod_network
+      - prod_network
 
   grafana:
     image: grafana/grafana
@@ -49,7 +49,7 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
     networks: 
-      - pipeline_prod_network
+      - prod_network
   
   sonarqube:
     image: sonarqube:lts
@@ -57,7 +57,7 @@ services:
     ports:
       - "9000:9000"
     networks:
-      - pipeline_prod_network
+      - prod_network
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
     volumes:
@@ -72,4 +72,4 @@ volumes:
   sonarqube_extensions:
 
 networks:
-  pipeline_prod_network:
+  prod_network:

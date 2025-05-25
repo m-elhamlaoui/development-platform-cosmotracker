@@ -118,9 +118,9 @@ pipeline {
                         export DB_USER=$DB_USER
                         export DB_PASS=$DB_PASS
 
-                        docker compose -f docker-compose.prod.yml down --remove-orphans
-                        docker compose -f docker-compose.prod.yml pull
-                        docker compose -f docker-compose.prod.yml up -d
+                        docker-compose -f docker-compose.prod.yml down --remove-orphans
+                        docker-compose -f docker-compose.prod.yml pull
+                        docker-compose -f docker-compose.prod.yml up -d
                     '''
                 }
             }

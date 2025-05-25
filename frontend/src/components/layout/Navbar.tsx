@@ -25,17 +25,15 @@ const Navbar: React.FC = () => {
             <span className="ml-2 text-xl font-bold text-white">CosmoTracker</span>
           </Link>
 
-          {/* Desktop Links */}
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
                 <NavLink to="/"       icon={<Home />}     label="Home"     active={isActive('/')} />
                 <NavLink to="/events" icon={<Calendar />} label="All Events" active={isActive('/events')} />
                 <NavLink to="/monthly"icon={<Calendar />} label="This Month" active={isActive('/monthly')} />
+                <NavLink to="/apod"    icon={<Image />}    label="APOD"      active={isActive('/apod')} />
                 <NavLink to="/favorites" icon={<Star />}  label="Favorites" active={isActive('/favorites')} />
                 <NavLink to="/profile" icon={<User />}     label="Profile"   active={isActive('/profile')} />
-                {/* APOD link now uses <Image /> */}
-                <NavLink to="/apod"    icon={<Image />}    label="APOD"      active={isActive('/apod')} />
 
                 <Button
                   variant="ghost"

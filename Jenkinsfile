@@ -125,20 +125,7 @@ pipeline {
                 }
             }
         }
-
-        stage('SonarQube Analysis'){
-            steps{
-                sh '''
-                cd backend && \
-                mvn sonar:sonar \
-                -Dsonar.projectKey=cosmo-backend \
-                -Dsonar.host.url=http://sonarqube:9000 \
-                -Dsonar.login=squ_cb8b568b499506cea18cb2c023896b83a7ce81e5
-                '''
-            }
-        }
-    }
-
+        
     post {
         always {
             sh 'docker system prune -f'

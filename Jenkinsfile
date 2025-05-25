@@ -132,7 +132,7 @@ pipeline {
                 cd backend && \
                 mvn sonar:sonar \
                 -Dsonar.projectKey=cosmo-backend \
-                -Dsonar.host.url=http://192.168.125.212:9000 \
+                -Dsonar.host.url=http://localhost:9000 \
                 -Dsonar.login=squ_36bca46a72517aa5edeabfb39461839896388691
                 '''
             }

@@ -3,6 +3,12 @@ import { authorizedFetch } from '../utils/api';
 
 const BASE_URL = 'http://localhost:8081/api/events';
 
+import { CosmicEvent } from '../types';
+import { authorizedFetch } from '../utils/api';
+
+const EVENT_BASE = 'http://localhost:8081/api/events';
+const NASA_BASE  = 'http://localhost:8081/api/nasa';
+
 // Fetch all favorites
 export const fetchFavorites = async (): Promise<CosmicEvent[]> => {
   const response = await authorizedFetch('http://localhost:8081/api/favorites');
@@ -68,3 +74,9 @@ export const fetchEventsByMonth = async (month: string): Promise<CosmicEvent[]> 
   if (!response.ok) throw new Error('Failed to fetch monthly events');
   return response.json();
 };
+
+export async function fetchApod() {
+  const res = await fetch(`${NASA_BASE}/apod`);
+  if (!res.ok) throw new Error(`APOD call failed: ${res.status}`);
+  return res.json();
+}

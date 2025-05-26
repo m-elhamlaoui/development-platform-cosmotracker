@@ -25,6 +25,45 @@ Link for the video : https://drive.google.com/drive/folders/1f_NaOYMMaEiRxC0XCE8
 
 ![project backend architecture](assets/backend1.png)
 
+## Jenkins CI/CD Pipeline
+Our project includes a Jenkins Pipeline for continuous integration and deployment.
+
+![project backend architecture](assets/pipeline.png)
+
+### Pipeline steps: 
+
+#### General Setup 
+
+The pipeline runs on any available Jenkins Agent and uses Maven 3.
+
+#### Checkout stage
+
+We checkout the source code from our Git repository
+
+#### Docker Login 
+
+Authenticate with Docker Hub using the DOCKER_CREDS credentials, preconfigured inside Jenkins.
+
+#### Build and Push (Runs in Parallel)
+
+We first run our backend tests using `mvn test`.
+We compile and package our backend JAR using Maven.
+Then we build a Docker image for our backend, tag it with `latest` and build version and then we push both tags to Docker Hub. 
+
+In parallel, we also build a new image for our front end and then push it with `latest` and build version.
+
+![project backend architecture](assets/dockerhub.png)
+
+#### Deployment 
+
+We stop, remove and redeploy the containers using docker-compose.prod.yml
+
+#### Post-Build Actions
+
+Always : clean up unused Docker ressources and log out from Docker Hub
+
+On Success : print success message and image tags
+On failure : print error message
 
 ## Technology Stack
 

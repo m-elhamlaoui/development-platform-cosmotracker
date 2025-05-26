@@ -28,7 +28,7 @@ Link for the video : https://drive.google.com/drive/folders/1f_NaOYMMaEiRxC0XCE8
 ## Jenkins CI/CD Pipeline
 Our project includes a Jenkins Pipeline for continuous integration and deployment.
 
-![project backend architecture](assets/pipeline.png)
+![Jenkins CI/CD pipeline](assets/pipeline.png)
 
 ### Pipeline steps: 
 
@@ -52,7 +52,7 @@ Then we build a Docker image for our backend, tag it with `latest` and build ver
 
 In parallel, we also build a new image for our front end and then push it with `latest` and build version.
 
-![project backend architecture](assets/dockerhub.png)
+![Dockerhub](assets/dockerhub.png)
 
 #### Deployment 
 
@@ -64,6 +64,15 @@ Always : clean up unused Docker ressources and log out from Docker Hub
 
 On Success : print success message and image tags
 On failure : print error message
+
+## Monitoring :
+We use prometheus to monitor our backend 
+
+![Prometheus](assets/prometheus.png)
+
+This is our grafana dashboard for the metrics pulled from our backend:
+
+![Grafana](assets/grafana.png)
 
 ## Technology Stack
 

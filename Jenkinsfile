@@ -41,19 +41,6 @@ pipeline {
                             }
                         }
 
-                        stage('Build JAR') {
-                            steps {
-                                dir('backend') {
-                                    sh 'mvn -B clean package'
-                                }
-                            }
-                            post {
-                                success {
-                                    archiveArtifacts artifacts: "backend/target/*.jar", fingerprint: true
-                                }
-                            }
-                        }
-
                         stage('Build & Push Backend Image') {
                             environment {
                                 IMAGE_NAME = 'cosmo-backend'
